@@ -64,15 +64,38 @@ const images = [
   },
 ];
 
-// Markup template
-`<li class="gallery-item">
-  <a class="gallery-link" href="large-image.jpg">
+const gallery = document.querySelector('.gallery');
+
+const galleryMarkup = images
+  .map(
+    ({ preview, original, description }) =>
+      `<li class="gallery-item">
+  <a class="gallery-link" href=${original}>
     <img
-      class="gallery-image"
-      src="small-image.jpg"
-      data-source="large-image.jpg"
-      alt="Image description"
+    width="320"
+    height="200"
+    class="gallery-image"
+    src=${preview}
+    data-source=${original}
+    alt=${description}
     />
   </a>
-</li>
-`;
+</li>`
+  )
+  .join('');
+
+gallery.insertAdjacentHTML('beforeend', galleryMarkup);
+
+gallery.addEventListener('click', viewImage);
+
+function viewImage(event) {
+  event.preventDefault();
+  const image = event.target.closest('.gallery-image');
+  if (!image) return;
+  const originalSrc = image.getAttribute('data-source');
+  const instance = basicLightbox.create(`
+    <img src=${originalSrc} width="800" height="600">
+`);
+
+  instance.show();
+}
