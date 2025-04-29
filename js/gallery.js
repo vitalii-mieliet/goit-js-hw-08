@@ -93,8 +93,9 @@ function viewImage(event) {
   const image = event.target.closest('.gallery-image');
   if (!image) return;
   const originalSrc = image.getAttribute('data-source');
+  const alt = image.getAttribute('alt');
   const instance = basicLightbox.create(`
-    <img src=${originalSrc} width="800" height="600">
+    <img src=${originalSrc} width="800" height="600" alt="${alt}">
 `);
 
   instance.show();
