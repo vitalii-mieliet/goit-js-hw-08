@@ -90,8 +90,9 @@ gallery.addEventListener('click', viewImage);
 
 function viewImage(event) {
   event.preventDefault();
-  const image = event.target.closest('.gallery-image');
-  if (!image) return;
+  // const image = event.target.closest('.gallery-image');
+  const image = event.target;
+  if (image.nodeName !== 'IMG') return;
   const originalSrc = image.getAttribute('data-source');
   const alt = image.getAttribute('alt');
   const instance = basicLightbox.create(`
